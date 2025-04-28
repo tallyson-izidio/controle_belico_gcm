@@ -1,0 +1,66 @@
+<%= form_with(model: movement, local: true) do |form| %>
+  <% if movement.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(movement.errors.count, "erro") %> impediram o salvamento:</h2>
+      <ul>
+        <% movement.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :movement_type, "Tipo" %><br>
+    <%= form.select :movement_type, Movement.movement_types.keys.map { |t| [t.humanize, t] }, prompt: "Selecione o tipo" %>
+  </div>
+
+  <div>
+    <%= form.label :armeiro_id, "Armeiro" %><br>
+    <%= form.collection_select :armeiro_id, Guard.all, :id, ->(g) { "#{g.full_name} (#{g.matricula})" }, prompt: "Selecione o armeiro" %>
+  </div>
+
+  <div>
+    <%= form.label :guard_id, "Guarda" %><br>
+    <%= form.collection_select :guard_id, Guard.all, :id, ->(g) { "#{g.full_name} (#{g.matricula})" }, prompt: "Selecione o guarda" %>
+  </div>
+
+  <div>
+    <%= form.label :weapon_id, "Arma" %><br>
+    <%= form.collection_select :weapon_id, Weapon.all, :id, :model, prompt: "Selecione a arma" %>
+  </div>
+
+  <div>
+    <%= form.label :date, "Data" %><br>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :time, "Hora" %><br>
+    <%= form.time_field :time %>
+  </div>
+
+  <div>
+    <%= form.label :ammo_count, "Quantidade de Balas" %><br>
+    <%= form.number_field :ammo_count %>
+  </div>
+
+  <div>
+    <%= form.label :ammo_caliber, "Calibre" %><br>
+    <%= form.text_field :ammo_caliber %>
+  </div>
+
+  <div>
+    <%= form.label :magazine_count, "Quantidade de Carregadores" %><br>
+    <%= form.number_field :magazine_count %>
+  </div>
+
+  <div>
+    <%= form.label :justification, "Justificativa (se aplicável)" %><br>
+    <%= form.text_area :justification %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

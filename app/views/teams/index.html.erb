@@ -1,0 +1,31 @@
+### app/views/teams/index.html.erb
+<h1>Equipes</h1>
+
+<%= link_to "Nova Equipe", new_team_path if policy(Team).create? %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Unidade</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+        <td><%= team.name %></td>
+        <td><%= team.unit.name %></td>
+        <td>
+          <%= link_to "Ver", team_path(team) %> |
+          <% if policy(team).edit? %>
+            <%= link_to "Editar", edit_team_path(team) %> |
+          <% end %>
+          <% if policy(team).destroy? %>
+            <%= link_to "Deletar", team_path(team), method: :delete, data: { confirm: "Tem certeza?" } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

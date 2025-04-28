@@ -1,0 +1,31 @@
+<%= form_with(model: weapon, local: true) do |form| %>
+  <% if weapon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(weapon.errors.count, "erro") %> impediram o salvamento:</h2>
+      <ul>
+        <% weapon.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :model, "Modelo da Arma" %><br>
+    <%= form.text_field :model %>
+  </div>
+
+  <div>
+    <%= form.label :registration, "Registro" %><br>
+    <%= form.text_field :registration %>
+  </div>
+
+  <div>
+    <%= form.label :borrowed, "Emprestada?" %><br>
+    <%= form.check_box :borrowed %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

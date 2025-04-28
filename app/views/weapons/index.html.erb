@@ -1,0 +1,32 @@
+<h1>Armas</h1>
+
+<%= link_to "Nova Arma", new_weapon_path if policy(Weapon).create? %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Modelo</th>
+      <th>Registro</th>
+      <th>Emprestada?</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @weapons.each do |weapon| %>
+      <tr>
+        <td><%= weapon.model %></td>
+        <td><%= weapon.registration %></td>
+        <td><%= weapon.borrowed? ? 'Sim' : 'Não' %></td>
+        <td>
+          <%= link_to "Ver", weapon_path(weapon) %> |
+          <% if policy(weapon).edit? %>
+            <%= link_to "Editar", edit_weapon_path(weapon) %> |
+          <% end %>
+          <% if policy(weapon).destroy? %>
+            <%= link_to "Deletar", weapon_path(weapon), method: :delete, data: { confirm: "Tem certeza?" } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

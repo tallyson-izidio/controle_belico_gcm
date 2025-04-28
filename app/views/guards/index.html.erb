@@ -1,0 +1,34 @@
+<h1>Guardas</h1>
+
+<%= link_to "Novo Guarda", new_guard_path if policy(Guard).create? %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nome Completo</th>
+      <th>Matrícula</th>
+      <th>Porte nº</th>
+      <th>Equipe</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @guards.each do |guard| %>
+      <tr>
+        <td><%= guard.full_name %></td>
+        <td><%= guard.matricula %></td>
+        <td><%= guard.porte_numero %></td>
+        <td><%= guard.team.name %></td>
+        <td>
+          <%= link_to "Ver", guard_path(guard) %> |
+          <% if policy(guard).edit? %>
+            <%= link_to "Editar", edit_guard_path(guard) %> |
+          <% end %>
+          <% if policy(guard).destroy? %>
+            <%= link_to "Deletar", guard_path(guard), method: :delete, data: { confirm: "Tem certeza?" } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

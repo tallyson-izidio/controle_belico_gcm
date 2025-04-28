@@ -1,0 +1,40 @@
+<h1>Movimentações</h1>
+
+<%= link_to "Nova Movimentação", new_movement_path if policy(Movement).create? %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tipo</th>
+      <th>Armeiro</th>
+      <th>Matrícula Armeiro</th>
+      <th>Guarda</th>
+      <th>Matrícula Guarda</th>
+      <th>Arma</th>
+      <th>Data/Hora</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movements.each do |m| %>
+      <tr>
+        <td><%= m.movement_type.humanize %></td>
+        <td><%= m.armeiro.full_name %></td>
+        <td><%= m.armeiro.matricula %></td>
+        <td><%= m.guard.full_name %></td>
+        <td><%= m.guard.matricula %></td>
+        <td><%= m.weapon.model %></td>
+        <td><%= l(m.date) %> <%= m.time.strftime("%H:%M") %></td>
+        <td>
+          <%= link_to "Ver", movement_path(m) %> |
+          <% if policy(m).edit? %>
+            <%= link_to "Editar", edit_movement_path(m) %> |
+          <% end %>
+          <% if policy(m).destroy? %>
+            <%= link_to "Deletar", movement_path(m), method: :delete, data: { confirm: "Tem certeza?" } %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

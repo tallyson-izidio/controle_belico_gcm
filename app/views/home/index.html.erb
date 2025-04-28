@@ -1,0 +1,18 @@
+<h1>Dashboard GCM Mossoró</h1>
+<p>Bem-vindo, <%= current_user.name %>!</p>
+
+<nav>
+  <ul>
+    <li><%= link_to 'Unidades', units_path %></li>
+    <li><%= link_to 'Equipes', teams_path %></li>
+    <li><%= link_to 'Guardas', guards_path %></li>
+    <li><%= link_to 'Armas', weapons_path %></li>
+    <li><%= link_to 'Movimentações', movements_path %></li>
+
+    <% if current_user.admin? %>
+      <li><%= link_to 'Cadastrar Usuário', new_user_registration_path %></li>
+    <% end %>
+
+    <li><%= button_to 'Logout', destroy_user_session_path, method: :delete %></li>
+  </ul>
+</nav>

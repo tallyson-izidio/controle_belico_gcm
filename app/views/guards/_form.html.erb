@@ -1,0 +1,36 @@
+<%= form_with(model: guard, local: true) do |form| %>
+  <% if guard.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(guard.errors.count, "erro") %> impediram o salvamento:</h2>
+      <ul>
+        <% guard.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :full_name, "Nome Completo" %><br>
+    <%= form.text_field :full_name %>
+  </div>
+
+  <div>
+    <%= form.label :matricula, "Matrícula" %><br>
+    <%= form.text_field :matricula %>
+  </div>
+
+  <div>
+    <%= form.label :porte_numero, "Numeração do Porte" %><br>
+    <%= form.text_field :porte_numero %>
+  </div>
+
+  <div>
+    <%= form.label :team_id, "Equipe" %><br>
+    <%= form.collection_select :team_id, Team.all, :id, :name, prompt: "Selecione uma equipe" %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
