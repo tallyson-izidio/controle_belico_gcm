@@ -1,14 +1,31 @@
-<p style="color: green"><%= notice %></p>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<h1>Units</h1>
+<!-- Título centralizado e maior -->
+<h1 class="text-5xl font-semibold text-center text-blue-600 mt-10">
+  Unidades
+</h1>
 
-<div id="units">
+<!-- Grid de unidades -->
+<div id="units" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
   <% @units.each do |unit| %>
-    <%= render unit %>
-    <p>
-      <%= link_to "Show this unit", unit %>
-    </p>
+    <!-- Card para cada unidade com largura maior -->
+    <div class="w-full max-w-md mx-auto border-2 border-blue-500 rounded-lg shadow-lg p-6">
+      <!-- Nome da unidade centralizado -->
+      <h2 class="text-2xl font-semibold text-blue-500 text-center mb-6">
+        <%= unit.name %>
+      </h2>
+
+      <!-- Botões centralizados -->
+      <div class="flex justify-center space-x-4">
+        <%= link_to "Mostrar", unit, class: "bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
+        <%= link_to "Editar", edit_unit_path(unit), class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
+      </div>
+    </div>
   <% end %>
 </div>
 
-<%= link_to "New unit", new_unit_path %>
+<!-- Botão para criar nova unidade centralizado e maior -->
+<div class="mt-8 flex justify-center">
+  <%= link_to "Nova Unidade", new_unit_path,
+      class: "bg-blue-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition" %>
+</div>

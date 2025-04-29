@@ -64,4 +64,5 @@ end
 
 gem 'devise'
 gem 'pundit'
+gem 'tailwindcss-rails'
 

@@ -1,18 +1,49 @@
-<h1>Dashboard GCM Mossoró</h1>
-<p>Bem-vindo, <%= current_user.name %>!</p>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<nav>
-  <ul>
-    <li><%= link_to 'Unidades', units_path %></li>
-    <li><%= link_to 'Equipes', teams_path %></li>
-    <li><%= link_to 'Guardas', guards_path %></li>
-    <li><%= link_to 'Armas', weapons_path %></li>
-    <li><%= link_to 'Movimentações', movements_path %></li>
+<h1 class="text-5xl font-semibold text-center mt-10 text-blue-600">
+  Sistema de Controle Bélico para a Guarda Civil Municipal(GCM) de Mossoró
+</h1>
 
+<p class="text-xl text-center mt-4 text-gray-700">Bem-vindo, <%= current_user.name %>!</p>
+
+<nav class="mt-8">
+  <!-- Grid para os cards, com Tailwind CSS -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
+
+    <!-- Card para "Unidades" -->
+    <div class="w-full max-w-xs mx-auto border-2 border-blue-500 bg-blue-500 rounded-lg shadow-lg p-8 hover:bg-blue-600 transition duration-300">
+      <%= link_to 'Unidades', units_path, class: 'block text-2xl text-white text-center p-6' %>
+    </div>
+
+    <!-- Card para "Equipes" -->
+    <div class="w-full max-w-xs mx-auto border-2 border-blue-500 bg-blue-500 rounded-lg shadow-lg p-8 hover:bg-blue-600 transition duration-300">
+      <%= link_to 'Equipes', teams_path, class: 'block text-2xl text-white text-center p-6' %>
+    </div>
+
+    <!-- Card para "Guardas" -->
+    <div class="w-full max-w-xs mx-auto border-2 border-blue-500 bg-blue-500 rounded-lg shadow-lg p-8 hover:bg-blue-600 transition duration-300">
+      <%= link_to 'Guardas', guards_path, class: 'block text-2xl text-white text-center p-6' %>
+    </div>
+
+    <!-- Card para "Armas" -->
+    <div class="w-full max-w-xs mx-auto border-2 border-blue-500 bg-blue-500 rounded-lg shadow-lg p-8 hover:bg-blue-600 transition duration-300">
+      <%= link_to 'Armas', weapons_path, class: 'block text-2xl text-white text-center p-6' %>
+    </div>
+
+    <!-- Card para "Movimentações" -->
+    <div class="w-full max-w-xs mx-auto border-2 border-blue-500 bg-blue-500 rounded-lg shadow-lg p-8 hover:bg-blue-600 transition duration-300">
+      <%= link_to 'Movimentações', movements_path, class: 'block text-2xl text-white text-center p-6' %>
+    </div>
+
+    <!-- Card para "Cadastrar Usuário" (Visível apenas para Admin) -->
     <% if current_user.admin? %>
-      <li><%= link_to 'Cadastrar Usuário', new_user_registration_path %></li>
+      <div class="w-full max-w-xs mx-auto border-2 border-green-500 bg-green-500 rounded-lg shadow-lg p-8 hover:bg-green-600 transition duration-300">
+        <%= link_to 'Cadastrar Usuário', new_user_registration_path, class: 'block text-2xl text-white text-center p-6' %>
+      </div>
     <% end %>
 
-    <li><%= button_to 'Logout', destroy_user_session_path, method: :delete %></li>
-  </ul>
+  </div>
 </nav>
