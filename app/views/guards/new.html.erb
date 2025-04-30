@@ -1,9 +1,61 @@
-<h1>New guard</h1>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= render "form", guard: @guard %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<br>
+<!-- Título -->
+<h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
+  Novo Guarda
+</h1>
 
-<div>
-  <%= link_to "Back to guards", guards_path %>
+<!-- Card para o formulário de criação -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <%= form_with(model: @guard, local: true) do |form| %>
+    <% if @guard.errors.any? %>
+      <div id="error_explanation" class="mb-4">
+        <h2><%= pluralize(@guard.errors.count, "erro") %> impediram o salvamento:</h2>
+        <ul>
+          <% @guard.errors.full_messages.each do |msg| %>
+            <li class="text-red-500"><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Nome Completo do Guarda -->
+    <div class="mb-4">
+      <%= form.label :full_name, "Nome Completo", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.text_field :full_name, class: "bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 w-full p-3 focus:outline-none focus:border-blue-500", placeholder: "Nome Completo" %>
+    </div>
+
+    <!-- Matrícula -->
+    <div class="mb-4">
+      <%= form.label :matricula, "Matrícula", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.text_field :matricula, class: "bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 w-full p-3 focus:outline-none focus:border-blue-500", placeholder: "Matrícula" %>
+    </div>
+
+    <!-- Porte Número -->
+    <div class="mb-4">
+      <%= form.label :porte_numero, "Porte nº", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.text_field :porte_numero, class: "bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 w-full p-3 focus:outline-none focus:border-blue-500", placeholder: "Porte número" %>
+    </div>
+
+    <!-- Seleção da Equipe -->
+    <div class="mb-6">
+      <%= form.label :team_id, "Equipe", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.collection_select :team_id, Team.all, :id, :name, { prompt: "Selecione a equipe" }, class: "bg-white text-lg text-gray-700 border border-slate-300 rounded-lg w-full p-3 focus:outline-none focus:border-blue-500" %>
+    </div>
+
+    <!-- Botão de Criação -->
+    <div class="mt-6">
+      <%= form.submit "Registrar Guarda", class: "w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-700" %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Botão de Voltar -->
+<div class="mt-8 flex justify-center">
+  <%= link_to "Voltar para Guarda", guards_path, class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
 </div>

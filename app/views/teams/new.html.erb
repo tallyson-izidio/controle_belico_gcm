@@ -1,9 +1,60 @@
-<h1>New team</h1>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete,
+      class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= render "form", team: @team %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<br>
+<!-- Título acima do card -->
+<h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
+  Nova Equipe
+</h1>
 
-<div>
-  <%= link_to "Voltar", teams_path %>
+<!-- Card para o formulário de edição -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <%= form_with(model: @team, local: true) do |form| %>
+    <% if @team.errors.any? %>
+      <div id="error_explanation" class="mb-4">
+        <h2 class="text-red-500">
+          <%= pluralize(@team.errors.count, "erro") %> impediram o salvamento:
+        </h2>
+        <ul>
+          <% @team.errors.full_messages.each do |msg| %>
+            <li class="text-red-500"><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Campo de nome da equipe -->
+    <div class="mb-4">
+      <%= form.label :name, "Nome da Equipe",
+            class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.text_field :name,
+            class: "bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 border border-slate-300 rounded-lg w-full p-3 focus:outline-none focus:border-blue-500",
+            placeholder: "Edite aqui" %>
+    </div>
+
+    <!-- Campo de seleção de unidade -->
+    <div class="mb-6">
+      <%= form.label :unit_id, "Unidade",
+            class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.collection_select :unit_id, Unit.all, :id, :name,
+            { prompt: "Selecione a unidade" },
+            class: "bg-white text-lg text-gray-700 border border-slate-300 rounded-lg w-full p-3 focus:outline-none focus:border-blue-500" %>
+    </div>
+
+    <!-- Botão de submit -->
+    <div class="mt-4">
+      <%= form.submit "Criar Equipe",
+            class: "w-full bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Botões "Mostrar" e "Voltar" -->
+<div class="mt-8 flex justify-center space-x-4">
+  <%= link_to "Voltar", teams_path,
+        class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
 </div>

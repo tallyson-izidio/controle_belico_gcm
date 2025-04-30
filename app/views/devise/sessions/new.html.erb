@@ -1,26 +1,52 @@
-<h2>Log in</h2>
+<!-- Título da página -->
+<h1 class="text-5xl font-semibold text-center text-blue-600 mt-10">
+  Log in
+</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+<!-- Card do formulário de login -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    
+    <!-- Exibição de mensagens de erro -->
+    <% if resource.errors.any? %>
+      <div id="error_explanation" class="mb-4">
+        <h2 class="text-red-500"><%= pluralize(resource.errors.count, "erro") %> impediram o login:</h2>
+        <ul>
+          <% resource.errors.full_messages.each do |msg| %>
+            <li class="text-red-500"><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+    <!-- Campo de Email -->
+    <div class="mb-4">
+      <%= f.label :email, class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.email_field :email, autofocus: true, class: "bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 border border-slate-300 rounded-lg w-full p-3 focus:outline-none focus:border-blue-500", autocomplete: "email", placeholder: "Digite seu email" %>
+    </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+    <!-- Campo de Senha -->
+    <div class="mb-4">
+      <%= f.label :password, class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.password_field :password, class: "bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 border border-slate-300 rounded-lg w-full p-3 focus:outline-none focus:border-blue-500", autocomplete: "current-password", placeholder: "Digite sua senha" %>
+    </div>
+
+    <!-- Lembrar-me checkbox -->
+    <% if devise_mapping.rememberable? %>
+      <div class="mb-4 flex items-center">
+        <%= f.check_box :remember_me, class: "mr-2" %>
+        <%= f.label :remember_me, class: "text-gray-600 text-sm" %>
+      </div>
+    <% end %>
+
+    <!-- Botão de Submit -->
+    <div class="mt-6">
+      <%= f.submit "Log in", class: "w-full bg-blue-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition" %>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <!-- Links para "Esqueci minha senha" e "Registrar" -->
+  <div class="mt-6 text-center">
+    <%= link_to "Esqueci minha senha?", new_user_password_path, class: "text-blue-500 hover:text-blue-700" %> |
   </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

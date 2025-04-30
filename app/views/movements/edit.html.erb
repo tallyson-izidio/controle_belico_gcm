@@ -21,16 +21,69 @@
       </div>
     <% end %>
 
-    <!-- Campos do formulário -->
+    <!-- Tipo da Movimentação -->
     <div class="mb-4">
-      <%= form.label :movement_type, "Tipo", class: "block" %><br>
-      <%= form.select :movement_type, Movement.movement_types.keys.map { |t| [t.humanize, t] }, prompt: "Selecione o tipo" %>
+      <%= form.label :movement_type, "Tipo", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.select :movement_type, Movement.movement_types.keys.map { |t| [t.humanize, t] }, { prompt: "Selecione o tipo" }, class: "w-full p-3 border rounded" %>
     </div>
 
-    <!-- Outros campos do formulário para Armeiro, Guarda, Arma, etc. -->
-
+    <!-- Armeiro -->
     <div class="mb-4">
-      <%= form.submit "Atualizar Movimentação", class: "w-full bg-blue-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition" %>
+      <%= form.label :armeiro_id, "Armeiro", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.collection_select :armeiro_id, Guard.all, :id, :full_name, { prompt: "Selecione o armeiro" }, class: "w-full p-3 border rounded" %>
+    </div>
+
+    <!-- Guarda -->
+    <div class="mb-4">
+      <%= form.label :guard_id, "Guarda", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.collection_select :guard_id, Guard.all, :id, :full_name, { prompt: "Selecione o guarda" }, class: "w-full p-3 border rounded" %>
+    </div>
+
+    <!-- Arma -->
+    <div class="mb-4">
+      <%= form.label :weapon_id, "Arma", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.collection_select :weapon_id, Weapon.all, :id, :model, { prompt: "Selecione a arma" }, class: "w-full p-3 border rounded" %>
+    </div>
+
+    <!-- Data -->
+    <div class="mb-4">
+      <%= form.label :date, "Data", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.date_field :date, class: "w-full p-3 border rounded" %>
+    </div>
+
+    <!-- Hora -->
+    <div class="mb-4">
+      <%= form.label :time, "Hora", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.time_field :time, class: "w-full p-3 border rounded" %>
+    </div>
+
+    <!-- Quantidade de Balas -->
+    <div class="mb-4">
+      <%= form.label :ammo_count, "Quantidade de Balas", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.number_field :ammo_count, class: "w-full p-3 border rounded" %>
+    </div>
+
+    <!-- Calibre -->
+    <div class="mb-4">
+      <%= form.label :ammo_caliber, "Calibre", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.text_field :ammo_caliber, class: "w-full p-3 border rounded", placeholder: "Digite o calibre" %>
+    </div>
+
+    <!-- Quantidade de Carregadores -->
+    <div class="mb-4">
+      <%= form.label :magazine_count, "Quantidade de Carregadores", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.number_field :magazine_count, class: "w-full p-3 border rounded" %>
+    </div>
+
+    <!-- Justificativa -->
+    <div class="mb-4">
+      <%= form.label :justification, "Justificativa (se aplicável)", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.text_area :justification, class: "w-full p-3 border rounded", placeholder: "Explique se houve falta" %>
+    </div>
+
+    <!-- Botão de Submit -->
+    <div class="mt-6">
+      <%= form.submit "Atualizar Movimentação", class: "w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-700" %>
     </div>
   <% end %>
 </div>

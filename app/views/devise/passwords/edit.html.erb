@@ -1,25 +1,43 @@
-<h2>Change your password</h2>
+<h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
+  Redefinir Senha
+</h1>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
+<!-- Card do formulário de redefinição de senha -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+    <!-- Token oculto -->
+    <%= f.hidden_field :reset_password_token %>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-    <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
-  </div>
+    <!-- Exibição de erros -->
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+    <!-- Campo de Nova Senha -->
+    <div class="mb-4">
+      <%= f.label :password, "Nova senha", class: "block text-lg text-blue-600 mb-2" %>
+      <% if @minimum_password_length %>
+        <em class="text-sm text-gray-500">(<%= @minimum_password_length %> caracteres mínimo)</em>
+      <% end %>
+      <%= f.password_field :password, autofocus: true, autocomplete: "new-password",
+            class: "bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 border border-slate-300 rounded-lg w-full p-3 focus:outline-none focus:border-blue-500",
+            placeholder: "Digite sua nova senha" %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
+    <!-- Campo de Confirmação de Senha -->
+    <div class="mb-4">
+      <%= f.label :password_confirmation, "Confirme a nova senha", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password",
+            class: "bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 border border-slate-300 rounded-lg w-full p-3 focus:outline-none focus:border-blue-500",
+            placeholder: "Confirme sua nova senha" %>
+    </div>
 
-<%= render "devise/shared/links" %>
+    <!-- Botão de Enviar -->
+    <div class="mt-6">
+      <%= f.submit "Alterar senha", class: "w-full bg-blue-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition" %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Links Adicionais -->
+<div class="mt-6 text-center">
+  <%= link_to "Voltar para o login", new_user_session_path, class: "text-blue-500 hover:text-blue-700" %>
+</div>

@@ -1,18 +1,15 @@
-<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
-  <h1 class="text-xl font-semibold">Dashboard</h1>
-  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
-</header>
-
 <h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
   Nova Movimentação
 </h1>
 
 <!-- Card para o formulário de criação -->
 <div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
-  <%= form_with(model: @movement, local: true) do |form| %>
+  <%= form_with(model: @movement, url: movements_path, method: :post, local: true, data: { turbo: false }) do |f| %>
     <% if @movement.errors.any? %>
       <div id="error_explanation" class="mb-4">
-        <h2 class="text-red-500"><%= pluralize(@movement.errors.count, "erro") %> impediram o salvamento:</h2>
+        <h2 class="text-red-500">
+          <%= pluralize(@movement.errors.count, "erro") %> impediram o salvamento:
+        </h2>
         <ul>
           <% @movement.errors.full_messages.each do |msg| %>
             <li class="text-red-500"><%= msg %></li>
@@ -21,69 +18,78 @@
       </div>
     <% end %>
 
-    <!-- Campo para Tipo de Movimentação -->
+    <!-- Tipo -->
     <div class="mb-4">
-      <%= form.label :movement_type, "Tipo", class: "block" %><br>
-      <%= form.select :movement_type, Movement.movement_types.keys.map { |t| [t.humanize, t] }, prompt: "Selecione o tipo", class: "w-full p-3 border border-slate-300 rounded-lg" %>
+      <%= f.label :movement_type, "Tipo", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.select :movement_type,
+                   Movement.movement_types.keys.map { |t| [t.humanize, t] },
+                   { prompt: "Selecione o tipo" },
+                   class: "w-full p-3 border rounded" %>
     </div>
 
-    <!-- Campo para Armeiro -->
+    <!-- Armeiro -->
     <div class="mb-4">
-      <%= form.label :armeiro_id, "Armeiro", class: "block" %><br>
-      <%= form.collection_select :armeiro_id, Guard.all, :id, :full_name, prompt: "Selecione o armeiro", class: "w-full p-3 border border-slate-300 rounded-lg" %>
+      <%= f.label :armeiro_id, "Armeiro", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.collection_select :armeiro_id, Guard.all, :id, :full_name,
+                              { prompt: "Selecione o armeiro" },
+                              class: "w-full p-3 border rounded" %>
     </div>
 
-    <!-- Campo para Guarda -->
+    <!-- Guarda -->
     <div class="mb-4">
-      <%= form.label :guard_id, "Guarda", class: "block" %><br>
-      <%= form.collection_select :guard_id, Guard.all, :id, :full_name, prompt: "Selecione o guarda", class: "w-full p-3 border border-slate-300 rounded-lg" %>
+      <%= f.label :guard_id, "Guarda", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.collection_select :guard_id, Guard.all, :id, :full_name,
+                              { prompt: "Selecione o guarda" },
+                              class: "w-full p-3 border rounded" %>
     </div>
 
-    <!-- Campo para Arma -->
+    <!-- Arma -->
     <div class="mb-4">
-      <%= form.label :weapon_id, "Arma", class: "block" %><br>
-      <%= form.collection_select :weapon_id, Weapon.all, :id, :model, prompt: "Selecione a arma", class: "w-full p-3 border border-slate-300 rounded-lg" %>
+      <%= f.label :weapon_id, "Arma", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.collection_select :weapon_id, Weapon.all, :id, :model,
+                              { prompt: "Selecione a arma" },
+                              class: "w-full p-3 border rounded" %>
     </div>
 
-    <!-- Campo para Data -->
+    <!-- Data -->
     <div class="mb-4">
-      <%= form.label :date, "Data", class: "block" %><br>
-      <%= form.date_field :date, class: "w-full p-3 border border-slate-300 rounded-lg" %>
+      <%= f.label :date, "Data", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.date_field :date, class: "w-full p-3 border rounded" %>
     </div>
 
-    <!-- Campo para Hora -->
+    <!-- Hora -->
     <div class="mb-4">
-      <%= form.label :time, "Hora", class: "block" %><br>
-      <%= form.time_field :time, class: "w-full p-3 border border-slate-300 rounded-lg" %>
+      <%= f.label :time, "Hora", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.time_field :time, class: "w-full p-3 border rounded" %>
     </div>
 
-    <!-- Campo para Quantidade de Balas -->
+    <!-- Balas -->
     <div class="mb-4">
-      <%= form.label :ammo_count, "Quantidade de Balas", class: "block" %><br>
-      <%= form.number_field :ammo_count, class: "w-full p-3 border border-slate-300 rounded-lg" %>
+      <%= f.label :ammo_count, "Quantidade de Balas", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.number_field :ammo_count, class: "w-full p-3 border rounded" %>
     </div>
 
-    <!-- Campo para Calibre -->
+    <!-- Calibre -->
     <div class="mb-4">
-      <%= form.label :ammo_caliber, "Calibre", class: "block" %><br>
-      <%= form.text_field :ammo_caliber, class: "w-full p-3 border border-slate-300 rounded-lg", placeholder: "Digite o calibre" %>
+      <%= f.label :ammo_caliber, "Calibre", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.text_field :ammo_caliber, class: "w-full p-3 border rounded", placeholder: "Digite o calibre" %>
     </div>
 
-    <!-- Campo para Quantidade de Carregadores -->
+    <!-- Carregadores -->
     <div class="mb-4">
-      <%= form.label :magazine_count, "Quantidade de Carregadores", class: "block" %><br>
-      <%= form.number_field :magazine_count, class: "w-full p-3 border border-slate-300 rounded-lg" %>
+      <%= f.label :magazine_count, "Quantidade de Carregadores", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.number_field :magazine_count, class: "w-full p-3 border rounded" %>
     </div>
 
-    <!-- Campo para Justificativa -->
+    <!-- Justificativa -->
     <div class="mb-4">
-      <%= form.label :justification, "Justificativa (se aplicável)", class: "block" %><br>
-      <%= form.text_area :justification, class: "w-full p-3 border border-slate-300 rounded-lg", placeholder: "Digite a justificativa" %>
+      <%= f.label :justification, "Justificativa (se aplicável)", class: "block text-lg text-blue-600 mb-2" %>
+      <%= f.text_area :justification, class: "w-full p-3 border rounded", placeholder: "Explique se houve falta" %>
     </div>
 
-    <!-- Botão de submit -->
-    <div class="actions mt-4">
-      <%= form.submit "Registrar Movimentação", class: "w-full bg-blue-500 text-white text-lg px-6 py-4 rounded-lg hover:bg-blue-700 transition" %>
+    <!-- Botão -->
+    <div class="mt-6">
+      <%= f.submit "Registrar Movimentação", class: "w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-700" %>
     </div>
   <% end %>
 </div>

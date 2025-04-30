@@ -1,9 +1,55 @@
-<h1>New weapon</h1>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= render "form", weapon: @weapon %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<br>
+<!-- Título -->
+<h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
+  Nova Arma
+</h1>
 
-<div>
-  <%= link_to "Back to weapons", weapons_path %>
+<!-- Card para o formulário de criação -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <%= form_with(model: @weapon, local: true) do |form| %>
+    <% if @weapon.errors.any? %>
+      <div id="error_explanation" class="mb-4">
+        <h2><%= pluralize(@weapon.errors.count, "erro") %> impediram o salvamento:</h2>
+        <ul>
+          <% @weapon.errors.full_messages.each do |msg| %>
+            <li class="text-red-500"><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Modelo da Arma -->
+    <div class="mb-4">
+      <%= form.label :model, "Modelo da Arma", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.text_field :model, class: "w-full p-3 border rounded-lg bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 focus:outline-none focus:border-blue-500", placeholder: "Digite o modelo da arma" %>
+    </div>
+
+    <!-- Registro da Arma -->
+    <div class="mb-4">
+      <%= form.label :registration, "Registro", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.text_field :registration, class: "w-full p-3 border rounded-lg bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 focus:outline-none focus:border-blue-500", placeholder: "Digite o registro da arma" %>
+    </div>
+
+    <!-- Emprestada -->
+    <div class="mb-4">
+      <%= form.label :borrowed, "Emprestada?", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.check_box :borrowed %>
+    </div>
+
+    <!-- Botão de Criação -->
+    <div class="mt-6">
+      <%= form.submit "Registrar Arma", class: "w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-700" %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Botão de Voltar -->
+<div class="mt-8 flex justify-center">
+  <%= link_to "Voltar", weapons_path, class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
 </div>

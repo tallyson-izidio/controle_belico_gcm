@@ -30,9 +30,8 @@
 
       <!-- Botões de Ações -->
       <div class="flex justify-center space-x-4 mt-4">
-        <%= link_to "Ver", movement_path(m), class: "bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
+        <%= link_to "Visualizar", movement_path(m), class: "bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
         <%= link_to "Editar", edit_movement_path(m), class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
-        <%= link_to "Deletar", movement_path(m), method: :delete, data: { confirm: "Tem certeza?" }, class: "bg-red-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-red-700 transition" %>
       </div>
     </div>
   <% end %>
@@ -44,7 +43,7 @@
   <%= link_to "Nova Movimentação", new_movement_path,
       class: "bg-blue-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition" %>
 
-  <!-- Botão "Voltar" para home -->
-  <%= link_to "Voltar", movements_path,
+  <!-- Botão "Voltar" para a home -->
+  <%= link_to "Voltar", root_path,
       class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
 </div>

@@ -1,66 +1,66 @@
-<%= form_with(model: movement, local: true) do |form| %>
-  <% if movement.errors.any? %>
+<%= form_with(model: @movement, local: true) do |f| %>
+  <% if @movement.errors.any? %>
     <div id="error_explanation" class="mb-4">
-      <h2 class="text-red-500"><%= pluralize(movement.errors.count, "erro") %> impediram o salvamento:</h2>
+      <h2><%= pluralize(@movement.errors.count, "erro") %> impediram o salvamento:</h2>
       <ul>
-        <% movement.errors.full_messages.each do |msg| %>
-          <li class="text-red-500"><%= msg %></li>
+        <% @movement.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="mb-4">
-    <%= form.label :movement_type, "Tipo" %><br>
-    <%= form.select :movement_type, Movement.movement_types.keys.map { |t| [t.humanize, t] }, prompt: "Selecione o tipo" %>
+    <%= f.label :movement_type, "Tipo" %><br />
+    <%= f.select :movement_type, Movement.movement_types.keys.map { |t| [t.humanize, t] }, prompt: "Selecione o tipo", class: "w-full p-3 border rounded" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :armeiro_id, "Armeiro" %><br>
-    <%= form.collection_select :armeiro_id, Guard.all, :id, :full_name, prompt: "Selecione o armeiro" %>
+    <%= f.label :armeiro_id, "Armeiro" %><br />
+    <%= f.collection_select :armeiro_id, Guard.all, :id, :full_name, prompt: "Selecione o armeiro", class: "w-full p-3 border rounded" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :guard_id, "Guarda" %><br>
-    <%= form.collection_select :guard_id, Guard.all, :id, :full_name, prompt: "Selecione o guarda" %>
+    <%= f.label :guard_id, "Guarda" %><br />
+    <%= f.collection_select :guard_id, Guard.all, :id, :full_name, prompt: "Selecione o guarda", class: "w-full p-3 border rounded" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :weapon_id, "Arma" %><br>
-    <%= form.collection_select :weapon_id, Weapon.all, :id, :model, prompt: "Selecione a arma" %>
+    <%= f.label :weapon_id, "Arma" %><br />
+    <%= f.collection_select :weapon_id, Weapon.all, :id, :model, prompt: "Selecione a arma", class: "w-full p-3 border rounded" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :date, "Data" %><br>
-    <%= form.date_field :date %>
+    <%= f.label :date, "Data" %><br />
+    <%= f.date_field :date, class: "w-full p-3 border rounded" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :time, "Hora" %><br>
-    <%= form.time_field :time %>
+    <%= f.label :time, "Hora" %><br />
+    <%= f.time_field :time, class: "w-full p-3 border rounded" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :ammo_count, "Quantidade de Balas" %><br>
-    <%= form.number_field :ammo_count %>
+    <%= f.label :ammo_count, "Quantidade de Balas" %><br />
+    <%= f.number_field :ammo_count, class: "w-full p-3 border rounded" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :ammo_caliber, "Calibre" %><br>
-    <%= form.text_field :ammo_caliber %>
+    <%= f.label :ammo_caliber, "Calibre" %><br />
+    <%= f.text_field :ammo_caliber, class: "w-full p-3 border rounded", placeholder: "Digite o calibre" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :magazine_count, "Quantidade de Carregadores" %><br>
-    <%= form.number_field :magazine_count %>
+    <%= f.label :magazine_count, "Quantidade de Carregadores" %><br />
+    <%= f.number_field :magazine_count, class: "w-full p-3 border rounded" %>
   </div>
 
   <div class="mb-4">
-    <%= form.label :justification, "Justificativa (se aplicável)" %><br>
-    <%= form.text_area :justification %>
+    <%= f.label :justification, "Justificativa (se aplicável)" %><br />
+    <%= f.text_area :justification, class: "w-full p-3 border rounded", placeholder: "Explique se houve falta" %>
   </div>
 
-  <div>
-    <%= form.submit "Registrar Movimentação", class: "w-full bg-blue-500 text-white text-lg px-6 py-4 rounded-lg hover:bg-blue-700 transition" %>
+  <div class="mt-6">
+    <%= f.submit "Registrar Movimentação", class: "w-full bg-blue-500 text-white py-3 rounded hover:bg-blue-700" %>
   </div>
 <% end %>

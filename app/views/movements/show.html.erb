@@ -1,10 +1,79 @@
-<p style="color: green"><%= notice %></p>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= render @movement %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<div>
-  <%= link_to "Edit this movement", edit_movement_path(@movement) %> |
-  <%= link_to "Back to movements", movements_path %>
+<!-- Título centralizado e maior -->
+<h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
+  Detalhes da Movimentação
+</h1>
 
-  <%= button_to "Destroy this movement", @movement, method: :delete %>
+<!-- Card com os dados da movimentação -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <!-- Tipo da Movimentação -->
+  <div class="mb-4">
+    <strong class="text-blue-600">Tipo:</strong> <%= @movement.movement_type.humanize %>
+  </div>
+
+  <!-- Armeiro -->
+  <div class="mb-4">
+    <strong class="text-blue-600">Armeiro:</strong> <%= @movement.armeiro.full_name %>
+  </div>
+
+  <!-- Guarda -->
+  <div class="mb-4">
+    <strong class="text-blue-600">Guarda:</strong> <%= @movement.guard.full_name %>
+  </div>
+
+  <!-- Arma -->
+  <div class="mb-4">
+    <strong class="text-blue-600">Arma:</strong> <%= @movement.weapon.model %>
+  </div>
+
+  <!-- Data e Hora -->
+  <div class="mb-4">
+    <strong class="text-blue-600">Data:</strong> <%= l(@movement.date) %>
+  </div>
+  <div class="mb-4">
+    <strong class="text-blue-600">Hora:</strong> <%= @movement.time.strftime("%H:%M") %>
+  </div>
+
+  <!-- Quantidade de Balas -->
+  <div class="mb-4">
+    <strong class="text-blue-600">Quantidade de Balas:</strong> <%= @movement.ammo_count %>
+  </div>
+
+  <!-- Calibre -->
+  <div class="mb-4">
+    <strong class="text-blue-600">Calibre:</strong> <%= @movement.ammo_caliber %>
+  </div>
+
+  <!-- Quantidade de Carregadores -->
+  <div class="mb-4">
+    <strong class="text-blue-600">Quantidade de Carregadores:</strong> <%= @movement.magazine_count %>
+  </div>
+
+  <!-- Justificativa -->
+  <% if @movement.justification.present? %>
+    <div class="mb-4">
+      <strong class="text-blue-600">Justificativa:</strong> <%= @movement.justification %>
+    </div>
+  <% else %>
+    <div class="mb-4">
+      <strong class="text-blue-600">Justificativa:</strong> Nenhuma justificativa fornecida
+    </div>
+  <% end %>
+
+  <!-- Botões de Ações -->
+  <div class="flex justify-center space-x-4 mt-4">
+    <%= link_to "Editar", edit_movement_path(@movement), class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
+    <%= button_to "Excluir", @movement, method: :delete, data: { confirm: "Tem certeza que deseja excluir esta movimentação?" }, class: "bg-red-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-red-700 transition" %>
+  </div>
+</div>
+
+<!-- Botão "Voltar" -->
+<div class="mt-8 flex justify-center">
+  <%= link_to "Voltar", movements_path, class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
 </div>
