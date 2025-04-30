@@ -1,10 +1,30 @@
-<p style="color: green"><%= notice %></p>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= render @unit %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<div>
-  <%= link_to "Edit this unit", edit_unit_path(@unit) %> |
-  <%= link_to "Back to units", units_path %>
+<!-- Título acima do card -->
+<h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
+  Dados da Unidade
+</h1>
 
-  <%= button_to "Destroy this unit", @unit, method: :delete %>
+<!-- Card com os dados da unidade -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <!-- Nome da unidade dentro do card -->
+  <h2 class="text-2xl font-semibold text-blue-500 text-center mb-6">
+    <%= @unit.name %>
+  </h2>
+
+  <!-- Botões de Editar e Excluir -->
+  <div class="flex justify-center space-x-4">
+    <%= link_to "Editar", edit_unit_path(@unit), class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
+    <%= button_to "Excluir", @unit, method: :delete, data: { confirm: "Tem certeza que deseja excluir esta unidade?" }, class: "bg-red-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-red-700 transition" %>
+  </div>
+</div>
+
+<!-- Botão "Voltar" para a lista de unidades -->
+<div class="mt-8 flex justify-center">
+  <%= link_to "Voltar", units_path, class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
 </div>

@@ -1,6 +1,6 @@
 class MovementsController < ApplicationController
   before_action :set_movement, only: %i[show edit update destroy]
-  after_action  :verify_authorized
+  after_action :verify_authorized
 
   def index
     @movements = policy_scope(Movement)
@@ -18,11 +18,12 @@ class MovementsController < ApplicationController
 
   def create
     @movement = Movement.new(movement_params)
-    authorize @movement
-    if @movement.save
+    authorize @movement  # Pundit authorization
+
+    if @movement.save  # Tentando salvar a movimentação
       redirect_to @movement, notice: 'Movimentação registrada com sucesso.'
     else
-      render :new
+      render :new  # Se falhar, renderiza a página de novo para o usuário corrigir
     end
   end
 
@@ -46,10 +47,13 @@ class MovementsController < ApplicationController
   end
 
   private
+
+    # Método para carregar a movimentação específica
     def set_movement
       @movement = Movement.find(params[:id])
     end
 
+    # Parâmetros permitidos para movimentação
     def movement_params
       params.require(:movement).permit(
         :armeiro_id,

@@ -1,10 +1,35 @@
-<p style="color: green"><%= notice %></p>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= render @team %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<div>
-  <%= link_to "Edit this team", edit_team_path(@team) %> |
-  <%= link_to "Back to teams", teams_path %>
+<!-- Título acima do card -->
+<h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
+  Dados da Equipe
+</h1>
 
-  <%= button_to "Destroy this team", @team, method: :delete %>
+<!-- Card com os dados da equipe -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <!-- Nome da equipe dentro do card -->
+  <h2 class="text-2xl font-semibold text-blue-500 text-center mb-6">
+    <%= @team.name %>
+  </h2>
+
+  <!-- Nome da unidade associada à equipe -->
+  <p class="text-center text-lg text-gray-400 mb-4">
+  <strong>Unidade:</strong> <%= @team.unit.name %>
+  </p>
+
+  <!-- Botões de Editar e Excluir -->
+  <div class="flex justify-center space-x-4">
+    <%= link_to "Editar", edit_team_path(@team), class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
+    <%= button_to "Excluir", @team, method: :delete, data: { confirm: "Tem certeza que deseja excluir esta equipe?" }, class: "bg-red-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-red-700 transition" %>
+  </div>
+</div>
+
+<!-- Botão "Voltar" para a lista de equipes -->
+<div class="mt-8 flex justify-center">
+  <%= link_to "Voltar", teams_path, class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
 </div>

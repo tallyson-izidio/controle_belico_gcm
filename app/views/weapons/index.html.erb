@@ -1,32 +1,52 @@
-<h1>Armas</h1>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= link_to "Nova Arma", new_weapon_path if policy(Weapon).create? %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Modelo</th>
-      <th>Registro</th>
-      <th>Emprestada?</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @weapons.each do |weapon| %>
-      <tr>
-        <td><%= weapon.model %></td>
-        <td><%= weapon.registration %></td>
-        <td><%= weapon.borrowed? ? 'Sim' : 'Não' %></td>
-        <td>
-          <%= link_to "Ver", weapon_path(weapon) %> |
-          <% if policy(weapon).edit? %>
-            <%= link_to "Editar", edit_weapon_path(weapon) %> |
-          <% end %>
-          <% if policy(weapon).destroy? %>
-            <%= link_to "Deletar", weapon_path(weapon), method: :delete, data: { confirm: "Tem certeza?" } %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!-- Título centralizado e maior -->
+<h1 class="text-5xl font-semibold text-center text-blue-600 mt-10">
+  Armas
+</h1>
+
+<!-- Botão para criar nova arma -->
+
+
+<!-- Grid de armas com espaçamento nas laterais -->
+<div id="weapons" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+  <% @weapons.each do |weapon| %>
+    <div class="bg-gray-100 border border-slate-200 rounded-xl shadow-md p-6">
+      <!-- Modelo da arma -->
+      <h2 class="text-2xl font-semibold text-blue-600 text-center mb-6">
+        <%= weapon.model %>
+      </h2>
+
+      <!-- Dados adicionais sobre a arma -->
+      <p class="text-lg text-gray-700 mb-2">
+        <strong>Registro:</strong> <%= weapon.registration %>
+      </p>
+      <p class="text-lg text-gray-700 mb-6">
+        <strong>Emprestada:</strong> <%= weapon.borrowed? ? 'Sim' : 'Não' %>
+      </p>
+
+      <!-- Botões de ações -->
+      <div class="flex justify-center space-x-4">
+        <%= link_to "Visualizar", weapon, class: "bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
+        <% if policy(weapon).edit? %>
+          <%= link_to "Editar", edit_weapon_path(weapon), class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Botões "Voltar" e "Nova Arma" -->
+<div class="mt-8 flex justify-center space-x-4">
+  <% if policy(Weapon).create? %>
+    <%= link_to "Nova Arma", new_weapon_path,
+        class: "bg-blue-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition" %>
+  <% end %>
+  <%= link_to "Voltar", root_path,
+      class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
+</div>

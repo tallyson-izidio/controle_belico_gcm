@@ -1,40 +1,50 @@
-<h1>Movimentações</h1>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= link_to "Nova Movimentação", new_movement_path if policy(Movement).create? %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Tipo</th>
-      <th>Armeiro</th>
-      <th>Matrícula Armeiro</th>
-      <th>Guarda</th>
-      <th>Matrícula Guarda</th>
-      <th>Arma</th>
-      <th>Data/Hora</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @movements.each do |m| %>
-      <tr>
-        <td><%= m.movement_type.humanize %></td>
-        <td><%= m.armeiro.full_name %></td>
-        <td><%= m.armeiro.matricula %></td>
-        <td><%= m.guard.full_name %></td>
-        <td><%= m.guard.matricula %></td>
-        <td><%= m.weapon.model %></td>
-        <td><%= l(m.date) %> <%= m.time.strftime("%H:%M") %></td>
-        <td>
-          <%= link_to "Ver", movement_path(m) %> |
-          <% if policy(m).edit? %>
-            <%= link_to "Editar", edit_movement_path(m) %> |
-          <% end %>
-          <% if policy(m).destroy? %>
-            <%= link_to "Deletar", movement_path(m), method: :delete, data: { confirm: "Tem certeza?" } %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!-- Título centralizado e maior -->
+<h1 class="text-5xl font-semibold text-center text-blue-600 mt-10">
+  Movimentações
+</h1>
+
+<!-- Grid de movimentações com espaçamento nas laterais -->
+<div id="movements" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+  <% @movements.each do |m| %>
+    <!-- Card para cada movimentação -->
+    <div class="bg-gray-100 border border-slate-200 rounded-xl shadow-md p-6">
+      <!-- Tipo da movimentação -->
+      <h2 class="text-2xl font-semibold text-blue-600 text-center mb-6">
+        <%= m.movement_type.present? ? m.movement_type.humanize : "Tipo não definido" %>
+      </h2>
+
+      <!-- Detalhes da movimentação -->
+      <p><strong>Armeiro:</strong> <%= m.armeiro.full_name %></p>
+      <p><strong>Matrícula Armeiro:</strong> <%= m.armeiro.matricula %></p>
+      <p><strong>Guarda:</strong> <%= m.guard.full_name %></p>
+      <p><strong>Matrícula Guarda:</strong> <%= m.guard.matricula %></p>
+      <p><strong>Arma:</strong> <%= m.weapon.model %></p>
+      <p><strong>Data/Hora:</strong> <%= l(m.date) %> <%= m.time.strftime("%H:%M") %></p>
+
+      <!-- Botões de Ações -->
+      <div class="flex justify-center space-x-4 mt-4">
+        <%= link_to "Ver", movement_path(m), class: "bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
+        <%= link_to "Editar", edit_movement_path(m), class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
+        <%= link_to "Deletar", movement_path(m), method: :delete, data: { confirm: "Tem certeza?" }, class: "bg-red-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-red-700 transition" %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Botão para criar nova movimentação e botão de voltar -->
+<div class="mt-8 flex justify-center space-x-4">
+  <!-- Botão "Nova Movimentação" -->
+  <%= link_to "Nova Movimentação", new_movement_path,
+      class: "bg-blue-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition" %>
+
+  <!-- Botão "Voltar" para home -->
+  <%= link_to "Voltar", movements_path,
+      class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
+</div>

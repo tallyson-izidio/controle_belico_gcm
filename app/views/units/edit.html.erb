@@ -1,5 +1,41 @@
-<h1>Editar Unidade</h1>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= render 'form', unit: @unit %>
+<h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
+  Editar Unidade
+</h1>
 
-<%= link_to 'Voltar', unit_path(@unit) %>
+<!-- Card para o formulário de edição -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <%= form_with(model: @unit, local: true) do |form| %>
+    <% if @unit.errors.any? %>
+      <div id="error_explanation" class="mb-4">
+        <h2 class="text-red-500"><%= pluralize(@unit.errors.count, "erro") %> impediram o salvamento:</h2>
+        <ul>
+          <% @unit.errors.full_messages.each do |msg| %>
+            <li class="text-red-500"><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Campo de nome da unidade -->
+    <div class="field mb-4">
+      <%= form.label :name, "Nome da Unidade", class: "block text-lg text-blue-600 mb-2" %>
+      <%= form.text_field :name, class: "bg-white text-lg text-gray-700 placeholder:text-slate-400 placeholder:opacity-75 border border-slate-300 rounded-lg w-full p-3 focus:outline-none focus:border-blue-500", placeholder: "Edite aqui" %>
+    </div>
+
+    <!-- Botão de submit -->
+    <div class="actions mt-4">
+      <%= form.submit "Atualizar Unidade", class: "w-full bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
+    </div>
+  <% end %>
+</div>
+
+<!-- Botão "Voltar" -->
+<div class="mt-8 flex justify-center">
+   <%= link_to "Voltar", unit_path(@unit), class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
+  </div>
+</div>

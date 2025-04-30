@@ -1,10 +1,46 @@
-<p style="color: green"><%= notice %></p>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete,
+      class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= render @guard %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<div>
-  <%= link_to "Edit this guard", edit_guard_path(@guard) %> |
-  <%= link_to "Back to guards", guards_path %>
+<!-- Título acima do card -->
+<h1 class="text-4xl font-semibold text-center text-blue-600 mt-10">
+  Dados do Guarda
+</h1>
 
-  <%= button_to "Destroy this guard", @guard, method: :delete %>
+<!-- Card com os dados do guarda -->
+<div class="w-full max-w-md mx-auto bg-gray-100 border border-slate-200 rounded-xl shadow-lg p-6 mt-8">
+  <!-- Nome completo -->
+  <h2 class="text-2xl font-semibold text-blue-500 text-center mb-6">
+    <%= @guard.full_name %>
+  </h2>
+
+  <!-- Matrícula, porte e equipe -->
+  <p class="text-lg text-gray-700 mb-2">
+    <strong>Matrícula:</strong> <%= @guard.matricula %>
+  </p>
+  <p class="text-lg text-gray-700 mb-2">
+    <strong>Porte nº:</strong> <%= @guard.porte_numero %>
+  </p>
+  <p class="text-lg text-gray-700 mb-6">
+    <strong>Equipe:</strong> <%= @guard.team.name %>
+  </p>
+
+  <!-- Botões de Editar e Excluir -->
+  <div class="flex justify-center space-x-4">
+    <%= link_to "Editar", edit_guard_path(@guard),
+          class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
+    <%= button_to "Excluir", @guard, method: :delete,
+          data: { confirm: "Tem certeza que deseja excluir este guarda?" },
+          class: "bg-red-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-red-700 transition" %>
+  </div>
+</div>
+
+<!-- Botão "Voltar" para a lista de guardas -->
+<div class="mt-8 flex justify-center">
+  <%= link_to "Voltar", guards_path,
+        class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
 </div>

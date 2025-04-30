@@ -1,3 +1,8 @@
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
+
 <p class="text-green-600 text-center"><%= notice %></p>
 
 <!-- Título centralizado e maior -->
@@ -5,27 +10,32 @@
   Unidades
 </h1>
 
-<!-- Grid de unidades -->
-<div id="units" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Grid de unidades com espaçamento nas laterais -->
+<div id="units" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
   <% @units.each do |unit| %>
-    <!-- Card para cada unidade com largura maior -->
-    <div class="w-full max-w-md mx-auto border-2 border-blue-500 rounded-lg shadow-lg p-6">
+    <!-- Card para cada unidade com largura maior e centralizado -->
+    <div class="bg-gray-100 border border-slate-200 rounded-xl shadow-md p-6">
       <!-- Nome da unidade centralizado -->
-      <h2 class="text-2xl font-semibold text-blue-500 text-center mb-6">
+      <h2 class="text-2xl font-semibold text-blue-600 text-center mb-6">
         <%= unit.name %>
       </h2>
 
       <!-- Botões centralizados -->
       <div class="flex justify-center space-x-4">
-        <%= link_to "Mostrar", unit, class: "bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
+        <%= link_to "Visualizar", unit, class: "bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
         <%= link_to "Editar", edit_unit_path(unit), class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
       </div>
     </div>
   <% end %>
 </div>
 
-<!-- Botão para criar nova unidade centralizado e maior -->
-<div class="mt-8 flex justify-center">
+<!-- Botão para criar nova unidade e botão de voltar -->
+<div class="mt-8 flex justify-center space-x-4">
+  <!-- Botão "Nova Unidade" -->
   <%= link_to "Nova Unidade", new_unit_path,
       class: "bg-blue-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition" %>
+
+  <!-- Botão "Voltar" para home -->
+  <%= link_to "Voltar", root_path,
+      class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
 </div>

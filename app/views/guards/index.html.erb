@@ -1,34 +1,55 @@
-<h1>Guardas</h1>
+<header class="flex justify-between items-center p-4 bg-gray-100 shadow-md">
+  <h1 class="text-xl font-semibold">Dashboard</h1>
+  <%= button_to 'Logout', destroy_user_session_path, method: :delete,
+      class: 'bg-red-500 text-white px-4 py-2 rounded-lg' %>
+</header>
 
-<%= link_to "Novo Guarda", new_guard_path if policy(Guard).create? %>
+<p class="text-green-600 text-center"><%= notice %></p>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nome Completo</th>
-      <th>Matrícula</th>
-      <th>Porte nº</th>
-      <th>Equipe</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @guards.each do |guard| %>
-      <tr>
-        <td><%= guard.full_name %></td>
-        <td><%= guard.matricula %></td>
-        <td><%= guard.porte_numero %></td>
-        <td><%= guard.team.name %></td>
-        <td>
-          <%= link_to "Ver", guard_path(guard) %> |
-          <% if policy(guard).edit? %>
-            <%= link_to "Editar", edit_guard_path(guard) %> |
-          <% end %>
-          <% if policy(guard).destroy? %>
-            <%= link_to "Deletar", guard_path(guard), method: :delete, data: { confirm: "Tem certeza?" } %>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<!-- Título centralizado e maior -->
+<h1 class="text-5xl font-semibold text-center text-blue-600 mt-10">
+  Guardas
+</h1>
+
+<!-- Grid de guardas com espaçamento nas laterais -->
+<div id="guards" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-6">
+  <% @guards.each do |guard| %>
+    <div class="bg-gray-100 border border-slate-200 rounded-xl shadow-md p-6">
+      <!-- Nome completo -->
+      <h2 class="text-2xl font-semibold text-blue-600 text-center mb-4">
+        <%= guard.full_name %>
+      </h2>
+
+      <!-- Matrícula, porte e equipe -->
+      <p class="text-center text-lg text-gray-400 mb-2">
+        Matrícula: <%= guard.matricula %>
+      </p>
+      <p class="text-center text-lg text-gray-400 mb-2">
+        Porte nº: <%= guard.porte_numero %>
+      </p>
+      <p class="text-center text-lg text-gray-400 mb-6">
+        Equipe: <%= guard.team.name %>
+      </p>
+
+      <!-- Botões de ações -->
+      <div class="flex justify-center space-x-4">
+        <%= link_to "Visualizar", guard_path(guard),
+            class: "bg-blue-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-blue-700 transition" %>
+        <% if policy(guard).edit? %>
+          <%= link_to "Editar", edit_guard_path(guard),
+              class: "bg-green-500 text-white text-lg px-6 py-2 rounded-lg hover:bg-green-700 transition" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<!-- Botões "Voltar" e "Novo Guarda" -->
+<div class="mt-8 flex justify-center space-x-4">
+  <% if policy(Guard).create? %>
+    <%= link_to "Novo Guarda", new_guard_path,
+          class: "bg-blue-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-blue-700 transition" %>
+  <% end %>
+   <%= link_to "Voltar", root_path,
+        class: "bg-gray-500 text-white text-lg px-8 py-4 rounded-lg hover:bg-gray-700 transition" %>
+</div>
